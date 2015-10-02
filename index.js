@@ -6,6 +6,12 @@ const propTypes = {
 	arrows: {
 		type: 'boolean'
 	},
+	arrowNext: {
+		type: 'string'
+	},
+	arrowPrev: {
+		type: 'string'
+	},
 	class: {
 		type: 'string'
 	},
