@@ -1,0 +1,13 @@
+.Carousel,
+.Carousel > div {
+	overflow: hidden;
+}
+
+.Carousel {
+	width: 50px;
+}
+
+.Carousel > div > * {
+	display: table-cell;
+	width: 50px;
+}
