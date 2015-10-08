@@ -39,6 +39,8 @@ function afterMount({props}, el) {
 	const {arrows, duration, fastThreshold, interval, onChange, play, threshold} = props;
 	const swipe = new Swipe(el);
 
+	window.addEventListener('resize', () => swipe.refresh());
+
 	swipe.on('show', (i, el) => {
 		if (onChange) {
 			onChange(el, i);
