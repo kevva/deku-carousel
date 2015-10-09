@@ -106,7 +106,7 @@ function render({props, state}) {
 		}
 
 		return (
-			<div>
+			<div class='Carousel-controls'>
 				<button class='Carousel-control Carousel-control--prev'>
 					{arrowPrev || null}
 				</button>
@@ -133,9 +133,9 @@ function render({props, state}) {
 
 	return (
 		<div class={['Carousel', props.class]}>
-			<div>{children}</div>
+			<div class='Carousel-body'>{children}</div>
 			{getArrows()}
-			<div>{getIndicators()}</div>
+			<div class='Carousel-indicators'>{getIndicators()}</div>
 		</div>
 	);
 }
