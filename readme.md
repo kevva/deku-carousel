@@ -18,8 +18,8 @@ import Carousel from 'deku-carousel';
 export function render() {
 	return (
 		<Carousel play arrows arrowPrev='Previous' arrowNext='Next'>
-			<img src='cat.jpg' alt=''/>
-			<img src='unicorn.jpg' alt=''/>
+			<div><img src='cat.jpg' alt=''/></div>
+			<div><img src='unicorn.jpg' alt=''/></div>
 		</Carousel>
 	);
 }
