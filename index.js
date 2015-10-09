@@ -35,6 +35,12 @@ const propTypes = {
 	}
 };
 
+function initialState() {
+	return {
+		active: 0
+	};
+}
+
 function afterMount({props}, el, setState) {
 	const {arrows, duration, fastThreshold, indicator, interval, onChange, play, threshold} = props;
 	const swipe = new Swipe(el);
@@ -140,4 +146,4 @@ function render({props, state}) {
 	);
 }
 
-export default {afterMount, propTypes, render};
+export default {afterMount, initialState, propTypes, render};
