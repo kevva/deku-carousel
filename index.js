@@ -35,13 +35,15 @@ const propTypes = {
 	}
 };
 
-function afterMount({props}, el) {
-	const {arrows, duration, fastThreshold, interval, onChange, play, threshold} = props;
+function afterMount({props}, el, setState) {
+	const {arrows, duration, fastThreshold, indicator, interval, onChange, play, threshold} = props;
 	const swipe = new Swipe(el);
 
 	window.addEventListener('resize', () => swipe.refresh());
 
 	swipe.on('show', (i, el) => {
+		setState({active: i});
+
 		if (onChange) {
 			onChange(el, i);
 		}
@@ -78,13 +80,25 @@ function afterMount({props}, el) {
 		});
 	}
 
+	if (indicator) {
+		const selector = el.querySelectorAll('.Carousel-indicator');
+
+		Array.from(selector).forEach((el, i) => {
+			el.addEventListener('click', e => {
+				e.preventDefault();
+				swipe.show(i);
+			});
+		});
+	}
+
 	if (play) {
 		swipe.play();
 	}
 }
 
-function render({props}) {
-	const {arrows, arrowNext, arrowPrev, children} = props;
+function render({props, state}) {
+	const {arrows, arrowNext, arrowPrev, children, indicator} = props;
+	const {active} = state;
 
 	function getArrows() {
 		if (!arrows) {
@@ -103,10 +117,25 @@ function render({props}) {
 		);
 	}
 
+	function getIndicators() {
+		if (!indicator) {
+			return null;
+		}
+
+		return children.map((el, i) => {
+			return (
+				<div class={['Carousel-indicator', {'is-active': active === i}]}>
+					{typeof indicator === 'boolean' ? null : indicator}
+				</div>
+			);
+		});
+	}
+
 	return (
 		<div class={['Carousel', props.class]}>
 			<div>{children}</div>
 			{getArrows()}
+			<div>{getIndicators()}</div>
 		</div>
 	);
 }
