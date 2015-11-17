@@ -17,6 +17,7 @@
     "prepublish": "babel index.js --out-file dist.js",
     "test": "./node_modules/.bin/eslint index.js"
   },
+  "main": "dist.js",
   "files": [
     "dist.js"
   ],
