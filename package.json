@@ -14,10 +14,11 @@
   },
   "scripts": {
     "build": "browserify example/index.js -o example/build.js -dv",
+    "prepublish": "babel index.js --out-file dist.js",
     "test": "./node_modules/.bin/eslint index.js"
   },
   "files": [
-    "index.js"
+    "dist.js"
   ],
   "keywords": [
     "carousel",
