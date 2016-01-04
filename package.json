@@ -25,6 +25,7 @@
     "carousel",
     "component",
     "deku",
+    "deku-component",
     "swipe"
   ],
   "dependencies": {
