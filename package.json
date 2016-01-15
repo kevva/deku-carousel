@@ -13,8 +13,8 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "build": "browserify example/index.js -o example/build.js -dv",
-    "prepublish": "babel index.js --out-file dist.js",
+    "build": "browserify -o example/build.js -dv example/index.js",
+    "prepublish": "babel--out-file dist.js index.js ",
     "test": "./node_modules/.bin/eslint index.js"
   },
   "main": "dist.js",

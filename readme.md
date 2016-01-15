@@ -15,14 +15,16 @@ $ npm install --save deku-carousel
 ```js
 import Carousel from 'deku-carousel';
 
-export function render() {
+const render = () => {
 	return (
 		<Carousel play arrows arrowPrev='Previous' arrowNext='Next'>
 			<div><img src='cat.jpg' alt=''/></div>
 			<div><img src='unicorn.jpg' alt=''/></div>
 		</Carousel>
 	);
-}
+};
+
+export default {render};
 ```
 
 

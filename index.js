@@ -35,13 +35,13 @@ const propTypes = {
 	}
 };
 
-function initialState() {
+const initialState = () => {
 	return {
 		active: 0
 	};
-}
+};
 
-function afterMount({props}, el, setState) {
+const afterMount = ({props}, el, setState) => {
 	const {arrows, duration, fastThreshold, indicator, interval, onChange, play, threshold} = props;
 	const swipe = new Swipe(el);
 
@@ -100,50 +100,54 @@ function afterMount({props}, el, setState) {
 	if (play) {
 		swipe.play();
 	}
-}
+};
 
-function render({props, state}) {
-	const {arrows, arrowNext, arrowPrev, children, indicator} = props;
+const getArrows = ({props}) => {
+	const {arrows, arrowNext, arrowPrev} = props;
+
+	if (!arrows) {
+		return null;
+	}
+
+	return (
+		<div class='Carousel-controls'>
+			<button class='Carousel-control Carousel-control--prev'>
+				{arrowPrev || null}
+			</button>
+			<button class='Carousel-control Carousel-control--next'>
+				{arrowNext || null}
+			</button>
+		</div>
+	);
+};
+
+const getIndicators = ({props, state}) => {
+	const {children, indicator} = props;
 	const {active} = state;
 
-	function getArrows() {
-		if (!arrows) {
-			return null;
-		}
+	if (!indicator) {
+		return null;
+	}
 
+	return children.map((el, i) => {
 		return (
-			<div class='Carousel-controls'>
-				<button class='Carousel-control Carousel-control--prev'>
-					{arrowPrev || null}
-				</button>
-				<button class='Carousel-control Carousel-control--next'>
-					{arrowNext || null}
-				</button>
+			<div class={['Carousel-indicator', {'is-active': active === i}]}>
+				{typeof indicator === 'boolean' ? null : indicator}
 			</div>
 		);
-	}
+	});
+};
 
-	function getIndicators() {
-		if (!indicator) {
-			return null;
-		}
-
-		return children.map((el, i) => {
-			return (
-				<div class={['Carousel-indicator', {'is-active': active === i}]}>
-					{typeof indicator === 'boolean' ? null : indicator}
-				</div>
-			);
-		});
-	}
+const render = ({props, state}) => {
+	const {children} = props;
 
 	return (
 		<div class={['Carousel', props.class]}>
 			<div class='Carousel-body'>{children}</div>
-			{getArrows()}
-			<div class='Carousel-indicators'>{getIndicators()}</div>
+			{getArrows({props, state})}
+			<div class='Carousel-indicators'>{getIndicators({props, state})}</div>
 		</div>
 	);
-}
+};
 
 export default {afterMount, initialState, propTypes, render};
