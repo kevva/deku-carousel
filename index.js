@@ -1,58 +1,56 @@
-/** @jsx dom */
-import dom from 'magic-virtual-element';
+/** @jsx element */
+import classnames from 'classnames';
+import {element} from 'deku';
 import Swipe from 'swipe';
 
-const propTypes = {
-	arrows: {
-		type: 'boolean'
-	},
-	arrowNext: {
-		type: 'string'
-	},
-	arrowPrev: {
-		type: 'string'
-	},
-	class: {
-		type: 'string'
-	},
-	duration: {
-		type: 'number'
-	},
-	fastThreshold: {
-		type: 'number'
-	},
-	interval: {
-		type: 'number'
-	},
-	onChange: {
-		type: 'function'
-	},
-	play: {
-		type: 'boolean'
-	},
-	threshold: {
-		type: 'number'
-	}
+const getArrows = ({props}) => {
+	const {arrowNext, arrowPrev} = props;
+
+	return (
+		<div class='Carousel-controls'>
+			<button class='Carousel-control Carousel-control--prev'>
+				{arrowPrev || null}
+			</button>
+			<button class='Carousel-control Carousel-control--next'>
+				{arrowNext || null}
+			</button>
+		</div>
+	);
 };
 
-const initialState = () => {
-	return {
-		active: 0
-	};
+const getIndicators = ({children, context, props}) => {
+	const {indicator} = props;
+	const {active} = context;
+	const items = children.map((el, i) => {
+		const classes = classnames(['Carousel-indicator', {'is-active': active === i}]);
+
+		return (
+			<div class={classes}>
+				{typeof indicator === 'boolean' ? null : indicator}
+			</div>
+		);
+	});
+
+	return (
+		<div class='Carousel-indicators'>
+			{items}
+		</div>
+	);
 };
 
-const afterMount = ({props}, el, setState) => {
-	const {arrows, duration, fastThreshold, indicator, interval, onChange, play, threshold} = props;
+const create = ({dispatch, path, props}) => {
+	const {arrows, duration, fastThreshold, indicator, interval, play, threshold} = props;
+	const el = document.querySelector(`.id-${path}`);
 	const swipe = new Swipe(el);
 
 	window.addEventListener('resize', () => swipe.refresh());
 
 	swipe.on('show', (i, el) => {
-		setState({active: i});
-
-		if (onChange) {
-			onChange(el, i);
-		}
+		dispatch({
+			type: 'SHOW',
+			active: i,
+			element: el
+		});
 	});
 
 	if (typeof duration === 'number') {
@@ -102,52 +100,21 @@ const afterMount = ({props}, el, setState) => {
 	}
 };
 
-const getArrows = ({props}) => {
-	const {arrows, arrowNext, arrowPrev} = props;
-
-	if (!arrows) {
-		return null;
-	}
-
-	return (
-		<div class='Carousel-controls'>
-			<button class='Carousel-control Carousel-control--prev'>
-				{arrowPrev || null}
-			</button>
-			<button class='Carousel-control Carousel-control--next'>
-				{arrowNext || null}
-			</button>
-		</div>
-	);
+const onCreate = ({dispatch, path, props}) => {
+	requestAnimationFrame(() => create({dispatch, path, props}));
 };
 
-const getIndicators = ({props, state}) => {
-	const {children, indicator} = props;
-	const {active} = state;
-
-	if (!indicator) {
-		return null;
-	}
-
-	return children.map((el, i) => {
-		return (
-			<div class={['Carousel-indicator', {'is-active': active === i}]}>
-				{typeof indicator === 'boolean' ? null : indicator}
-			</div>
-		);
-	});
-};
-
-const render = ({props, state}) => {
-	const {children} = props;
+const render = ({children, context, path, props}) => {
+	const {arrows, indicator} = props;
+	const classes = classnames(['Carousel', props.class, `id-${path}`]);
 
 	return (
-		<div class={['Carousel', props.class]}>
+		<div class={classes}>
 			<div class='Carousel-body'>{children}</div>
-			{getArrows({props, state})}
-			<div class='Carousel-indicators'>{getIndicators({props, state})}</div>
+			{Boolean(arrows) && getArrows({props})}
+			{Boolean(indicator) && getIndicators({children, context, props})}
 		</div>
 	);
 };
 
-export default {afterMount, initialState, propTypes, render};
+export default {onCreate, render};
