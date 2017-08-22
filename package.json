@@ -1,72 +1,82 @@
 {
-  "name": "deku-carousel",
-  "version": "1.2.2",
-  "description": "Carousel component for deku",
-  "license": "MIT",
-  "repository": "kevva/deku-carousel",
-  "author": {
-    "name": "Kevin Mårtensson",
-    "email": "kevinmartensson@gmail.com",
-    "url": "github.com/kevva"
-  },
-  "engines": {
-    "node": ">=0.10.0"
-  },
-  "scripts": {
-    "build": "browserify -o example/build.js -dv example/index.js",
-    "prepublish": "babel--out-file dist.js index.js ",
-    "test": "xo"
-  },
-  "main": "dist.js",
-  "files": [
-    "dist.js"
-  ],
-  "keywords": [
-    "carousel",
-    "component",
-    "deku",
-    "deku-component",
-    "swipe"
-  ],
-  "dependencies": {
-    "magic-virtual-element": "^1.0.6",
-    "swipe": "^1.7.7"
-  },
-  "devDependencies": {
-    "babel": "^5.8.23",
-    "babel-eslint": "^4.1.1",
-    "babelify": "^6.3.0",
-    "browserify": "^11.2.0",
-    "deku": "^1.0.0",
-    "eslint-config-xo-react": "^0.3.0",
-    "eslint-plugin-react": "^3.9.0",
-    "xo": "*"
-  },
-  "browserify": {
-    "transform": [
-      "babelify"
-    ]
-  },
-  "xo": {
-    "envs": [
-      "browser",
-      "node"
-    ],
-    "esnext": true,
-    "extends": [
-      "xo-react"
-    ],
-    "ignores": [
-      "dist.js"
-    ],
-    "rules": {
-      "jsx-quotes": [
-        2,
-        "prefer-single"
-      ],
-      "react/no-unknown-property": 0,
-      "react/prop-types": 0,
-      "quote-props": 0
-    }
-  }
+	"name": "deku-carousel",
+	"version": "1.2.2",
+	"description": "Carousel component for deku",
+	"license": "MIT",
+	"repository": "kevva/deku-carousel",
+	"author": {
+		"name": "Kevin Mårtensson",
+		"email": "kevinmartensson@gmail.com",
+		"url": "github.com/kevva"
+	},
+	"engines": {
+		"node": ">=0.10.0"
+	},
+	"scripts": {
+		"build": "browserify example/index.js -o example/build.js",
+		"prepublish": "babel --out-file dist.js index.js ",
+		"test": "xo"
+	},
+	"main": "dist.js",
+	"files": [
+		"dist.js"
+	],
+	"keywords": [
+		"carousel",
+		"component",
+		"deku",
+		"deku-component",
+		"swipe"
+	],
+	"dependencies": {
+		"magic-virtual-element": "^1.0.6",
+		"swipe": "^1.7.7"
+	},
+	"devDependencies": {
+		"babel-cli": "^6.26.0",
+		"babel-preset-es2015": "^6.24.1",
+		"babel-preset-react": "^6.24.1",
+		"babelify": "^7.3.0",
+		"browserify": "^14.4.0",
+		"deku": "^1.0.0",
+		"eslint-config-xo-react": "^0.13.0",
+		"eslint-plugin-react": "^7.3.0",
+		"xo": "*"
+	},
+	"babel": {
+		"presets": [
+			"es2015",
+			"react"
+		]
+	},
+	"browserify": {
+		"transform": [
+			[
+				"babelify"
+			]
+		]
+	},
+	"xo": {
+		"envs": [
+			"browser",
+			"node"
+		],
+		"extends": [
+			"xo-react"
+		],
+		"ignores": [
+			"dist.js",
+			"example/build.js"
+		],
+		"rules": {
+			"jsx-quotes": [
+				2,
+				"prefer-single"
+			],
+			"react/no-array-index-key": 1,
+			"react/no-unknown-property": 0,
+			"react/prop-types": 0,
+			"quote-props": 0
+		}
+	}
 }

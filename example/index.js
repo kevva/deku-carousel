@@ -4,9 +4,9 @@ import {render, tree} from 'deku';
 import Carousel from '../';
 
 const app = tree(
-	<Carousel arrows arrowPrev='Prev' arrowNext='Next' indicator='o' play>
-		<div>hej</div>
-		<div>hej2</div>
+	<Carousel arrows play arrowPrev='Prev' arrowNext='Next' indicator='o'>
+		<div>Foo</div>
+		<div>Bar</div>
 	</Carousel>
 );
 

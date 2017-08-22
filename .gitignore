@@ -1,3 +1,4 @@
 dist.js
 example/build.js
 node_modules
+yarn.lock
